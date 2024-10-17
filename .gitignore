@@ -10,3 +10,6 @@ testing.py
 scraped-data.zip
 scraped-data/
 scraper.py
+.dockerignore
+Dockerfile
+Procfile
