@@ -1,35 +1,105 @@
-# Web Scraper for Product Data
+# Web Scraper
 
-This project is a web scraper that extracts data from a specific product page and downloads the product image, technical data in Excel format, and the product data sheet in PDF format. The scraper is built using Python, Selenium, BeautifulSoup, and Flask for the web interface.
+This project is a Flask-based web scraper that fetches product details, images, and product sheet PDFs from specified URLs. 
 
-## Features
-- Scrapes product details like technical specifications and saves them to an Excel file.
-- Downloads the product image.
-- Downloads the product data sheet in PDF format.
-- Provides a web interface for users to enter a product page URL and scrape data.
+## Prerequisites
 
-## Technologies Used
-- **Python**: The core programming language used.
-- **Selenium**: Used for browser automation to interact with the web page.
-- **BeautifulSoup**: Used for parsing the page's HTML and extracting relevant data.
-- **Flask**: Provides the web interface for scraping and user interaction.
-- **Pandas**: For writing the scraped data into an Excel file.
+Before you can run the program locally, you need to have the following installed on your machine:
 
-## Project Structure
-```bash
-├── app.py # Main Flask application ├── crawler.py # Handles the scraping logic ├── download_product_sheet.py # Handles downloading of the product data sheet ├── templates/ │ └── index.html # HTML template for the web interface ├── static/ │ ├── css/ │ │ └── style.css # CSS styling for the web interface │ ├── images/ │ │ └── web.jpg # Background image │ └── js/ │ └── scripts.js # JavaScript for handling front-end interactions ├── requirements.txt # Python dependencies ├── runtime.txt # Specifies the Python version ├── Procfile # Railway or Heroku deployment settings ├── scraped-data/ # Directory where scraped files are stored │ └── (Excel and PDF files will be saved here) └── .gitignore # Specifies files to be ignored by git
-```
+- **Python 3.6 or higher**: Make sure Python is installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
+- **Pip**: The package installer for Python should be included with your Python installation. You can check if it is installed by running `pip --version` in your command prompt or terminal.
+
 ## Setup Instructions
-
-### Prerequisites
-- Python 3.8 or later
-- `pip` (Python package manager)
-- Chrome/Chromium Browser
-- ChromeDriver (Ensure that you have the correct version of ChromeDriver for your browser version)
 
 ### 1. Clone the Repository
 
+Clone this repository to your local machine using Git:
+
 ```bash
-git clone https://github.com/zerreat/your-repo.git
-cd your-repo
+git clone <repository-url>
+cd web-scraper
 ```
+
+### 2. Create a Virtual Environment
+
+It's a good practice to create a virtual environment for your project:
+
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment:
+
+- **Windows**:
+```bash
+venv\Scripts\activate
+```
+
+- **macOS/Linux**:
+```bash
+source venv/bin/activate
+```
+
+### 3. Install Required Packages
+
+Install the required packages using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Download Chrome WebDriver and Chrome
+
+To run the program, you need to download the Chrome WebDriver and the Chrome executable:
+
+1. Download the **Chrome WebDriver** from [ChromeDriver - WebDriver for Chrome](https://chromedriver.chromium.org/downloads).
+2. Download the **Chrome executable** from [Chrome for Testing](https://googlechromelabs.github.io/chrome-for-testing/#stable).
+
+### 5. Save the Executables
+
+Save the downloaded files to the appropriate directories:
+
+- Place the Chrome WebDriver executable in the `drivers/` directory and rename it to `chromedriver.exe`:
+
+```bash
+drivers/chromedriver.exe
+```
+
+- Place the Chrome executable in the `drivers/chrome-win64/` directory and rename it to `chrome.exe`:
+
+```bash
+drivers/chrome-win64/chrome.exe
+```
+
+### 6. Run the Program
+
+Now you can run the Flask application:
+
+```bash
+python app.py
+```
+
+### 7. Access the Application
+
+Open your web browser and go to:
+
+```
+http://127.0.0.1:5000
+```
+
+### Functionality
+
+The application allows you to enter a product URL, and it will fetch the following:
+
+- Product details
+- Product image
+- Product sheet PDF
+
+### Notes
+
+- Ensure that the Chrome browser version matches the Chrome WebDriver version for compatibility.
+- If you encounter any issues, make sure the paths in your `.gitignore` and other configurations are correctly set.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
