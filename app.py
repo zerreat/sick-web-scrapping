@@ -16,10 +16,6 @@ app = Flask(__name__)
 # Get the current directory where the script is located
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Define the path to ChromeDriver and headless Chrome binary
-driver_path = os.path.join(current_dir, 'drivers', 'chromedriver.exe')
-chrome_path = os.path.join(current_dir, 'drivers', 'chrome-headless-shell-win64', 'chrome.exe')
-
 @app.route('/')
 def index():
     return render_template('index.html', error=None, success=None, download_link=None)
@@ -37,12 +33,20 @@ def scrape():
         os.makedirs(folder_name)
 
     chrome_options = Options()
-    chrome_options.binary_location = chrome_path
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--headless")  # Run in headless mode
+    chrome_options.add_argument("--disable-gpu")  # Optional: Disables GPU acceleration
+    chrome_options.add_argument("--window-size=1920,1080")  # Set window size for headless mode
+    chrome_options.add_argument("--no-sandbox")  # Important for running in some environments
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Disable shared memory usage, useful in Docker
+    # Add User-Agent header to Selenium Chrome options
+    chrome_options.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    )
 
-    service = Service(executable_path=driver_path)
+    # Initialize the ChromeDriver service
+    service = Service()  # Use the default ChromeDriver installed by Railway
+
+    # Set up Selenium WebDriver using the service and the Chrome options
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
@@ -72,6 +76,7 @@ def scrape():
                 zipf.write(os.path.join(folder_name, 'product-data-sheet.pdf'), 'product-data-sheet.pdf')
             else:
                 print("Product data sheet not found, skipping zip.")
+
     finally:
         driver.quit()
 
@@ -87,4 +92,4 @@ def download_zip():
     return send_from_directory(current_dir, 'scraped-data.zip', as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()  # Remove debug=True for production

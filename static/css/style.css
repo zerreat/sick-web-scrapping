@@ -39,7 +39,7 @@ h1 {
     font-weight: bold;
 }
 
-#crawler-form {
+#crawler-form, #contact-info {
     margin: 40px auto; 
     background-color: rgba(134, 101, 101, 0.85);
     padding: 30px;
@@ -110,7 +110,11 @@ button:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
+    
+#contact-info p {
+    font-size: 1.2em;
+    color: #333;
+}
 footer {
     text-align: center;
     font-size: 1em;
